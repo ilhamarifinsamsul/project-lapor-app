@@ -1,0 +1,18 @@
+<?php
+namespace App\Repositories;
+
+use App\Interfaces\AuthRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
+
+class AuthRepository implements AuthRepositoryInterface
+{
+    public function login(array $credentials)
+    {
+        // Implementation of login method
+        return Auth::attempt($credentials);
+    }
+
+
+}
+
+?>
