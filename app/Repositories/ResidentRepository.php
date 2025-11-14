@@ -3,6 +3,7 @@ namespace App\Repositories;
 
 use App\Interfaces\ResidentRepositoryInterface;
 use App\Models\Resident;
+use App\Models\User;
 
 class ResidentRepository implements ResidentRepositoryInterface
 {
@@ -21,7 +22,16 @@ class ResidentRepository implements ResidentRepositoryInterface
     public function createResident(array $data)
     {
         // Implementation to create a new resident
-        return Resident::create($data);
+        // berelasi ke model User juga
+        $user = User::create(
+            [
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+            ]
+        );
+
+        return $user->resident()->create($data);
     }
 
     public function updateResident(int $id, array $data)

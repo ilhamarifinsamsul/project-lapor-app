@@ -2,7 +2,7 @@
 @section('title', 'Data Masyarakat')
 @section('content')
 
-    <a href="create.html" class="btn btn-primary mb-3">Tambah Data</a>
+    <a href="{{ route('admin.resident.create') }}" class="btn btn-primary mb-3">Tambah Data</a>
 
 
     <div class="card shadow mb-4">
@@ -27,7 +27,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $resident->user->email }}</td>
                             <td>{{ $resident->user->name }}</td>
-                            <td><img src="{{ asset('storage/'. $resident->avatar) }}" alt="Avatar" width="100"></td>
+                            <td><img src="{{ asset('storage/' . $resident->avatar) }}" alt="Avatar" width="100"></td>
                             <td>
                                 <a href="edit.html" class="btn btn-warning">Edit</a>
 
