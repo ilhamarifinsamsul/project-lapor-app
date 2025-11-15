@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreResidentRequest;
 use App\Http\Requests\UpdateResidentRequest;
 use App\Interfaces\ResidentRepositoryInterface;
+use RealRashid\SweetAlert\Facades\Alert as Swal;
 use Illuminate\Http\Request;
 
 class ResidentController extends Controller
@@ -43,6 +44,8 @@ class ResidentController extends Controller
         $data['avatar'] = $request->file('avatar')->store('assets/avatars', 'public');
         $this->residentRepository->createResident($data);
 
+        Swal::toast('Resident created successfully', 'success')->timerProgressBar();
+
         return redirect()->route('admin.resident.index');
     }
 
@@ -79,14 +82,19 @@ class ResidentController extends Controller
         }
         $this->residentRepository->updateResident((int)$id, $data);
 
+        Swal::toast('Resident updated successfully', 'success')->timerProgressBar();
+
         return redirect()->route('admin.resident.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        //
+        $this->residentRepository->deleteResident($id);
+        Swal::toast('Resident deleted successfully', 'success')->timerProgressBar();
+        return redirect()->route('admin.resident.index');
+
     }
 }

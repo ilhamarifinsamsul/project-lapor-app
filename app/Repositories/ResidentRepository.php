@@ -52,6 +52,7 @@ class ResidentRepository implements ResidentRepositoryInterface
     {
         // Implementation to delete a resident by ID
         $resident = $this->getResidentById($id);
+        $resident->user->delete();
         return $resident->delete();
     }
 }

@@ -45,6 +45,8 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    @include('sweetalert::alert')
+
                     @yield('content')
                 </div>
                 <!-- /.container-fluid -->
@@ -90,6 +92,28 @@
     <script src="{{ asset('assets/admin/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
         <!-- Page level custom scripts -->
     <script src="{{ asset('assets/admin/js/demo/datatables-demo.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/sweetalert2.all.min.js') }}"></script>
+
+    {{-- sweetalert confirm delete --}}
+    <script>
+        function confirmDelete(form) {
+            Swal.fire({
+                title: "Apakah Anda yakin?",
+                text: "Data ini akan dihapus secara permanen!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ya, hapus!",
+                cancelButtonText: "Batal",
+                reverseButtons: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+
+            return false;
+        }
+    </script>
 
 </body>
 

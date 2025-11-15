@@ -33,8 +33,10 @@
 
                                 <a href="{{ route('admin.resident.show', $resident->id) }}" class="btn btn-info">Show</a>
 
-                                <form action="" method="POST" class="d-inline">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                <form action="{{ route('admin.resident.destroy', $resident->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirmDelete(this.form);">Delete</button>
                                 </form>
                             </td>
                         </tr>
