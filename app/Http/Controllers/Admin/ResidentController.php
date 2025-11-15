@@ -51,7 +51,9 @@ class ResidentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // show detail of resident
+        $resident = $this->residentRepository->getResidentById($id);
+        return view('pages.admin.resident.show', compact('resident'));
     }
 
     /**
