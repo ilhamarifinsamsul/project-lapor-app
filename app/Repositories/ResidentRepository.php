@@ -38,6 +38,13 @@ class ResidentRepository implements ResidentRepositoryInterface
     {
         // Implementation to update a resident by ID
         $resident = $this->getResidentById($id);
+
+        $resident->user->update([
+            'name' => $data['name'],
+            // password jika diisi dan tidak diisi
+            'password' => isset($data['password']) ? bcrypt($data['password']) : $resident->user->password,
+        ]);
+
         return $resident->update($data);
     }
 

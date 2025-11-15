@@ -29,7 +29,7 @@
                             <td>{{ $resident->user->name }}</td>
                             <td><img src="{{ asset('storage/' . $resident->avatar) }}" alt="Avatar" width="100"></td>
                             <td>
-                                <a href="edit.html" class="btn btn-warning">Edit</a>
+                                <a href="{{ route('admin.resident.edit', $resident->id) }}" class="btn btn-warning">Edit</a>
 
                                 <a href="show.html" class="btn btn-info">Show</a>
 
