@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Repositories;
+
 use App\Interfaces\ReportCategoryInterface;
 use App\Models\ReportCategory;
+use Illuminate\Support\Facades\Storage;
 
 class ReportCategoryRepository implements ReportCategoryInterface
 {
@@ -30,6 +32,15 @@ class ReportCategoryRepository implements ReportCategoryInterface
     public function deleteReportCategory(int $id)
     {
         $reportCategory = $this->getReportCategoryById($id);
+        
+        // Hapus file gambar dari storage jika ada
+        if ($reportCategory->image) {
+            $imagePath = 'public/' . $reportCategory->image;
+            if (Storage::exists($imagePath)) {
+                Storage::delete($imagePath);
+            }
+        }
+        
         return $reportCategory->delete();
     }
 }
