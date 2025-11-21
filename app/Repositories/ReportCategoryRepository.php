@@ -38,6 +38,7 @@ class ReportCategoryRepository implements ReportCategoryInterface
             $imagePath = 'public/' . $reportCategory->image;
             if (Storage::exists($imagePath)) {
                 Storage::delete($imagePath);
+                Storage::delete($imagePath);
             }
         }
         

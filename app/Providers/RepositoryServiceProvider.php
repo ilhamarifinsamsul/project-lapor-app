@@ -8,7 +8,9 @@ use App\Repositories\AuthRepository;
 use App\Repositories\ResidentRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Interfaces\ReportCategoryInterface;
+use App\Interfaces\ReportRepositoryInterface;
 use App\Repositories\ReportCategoryRepository;
+use App\Repositories\ReportRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,12 @@ class RepositoryServiceProvider extends ServiceProvider
             ReportCategoryInterface::class,
             ReportCategoryRepository::class
         );
+        $this->app->bind(
+            ReportRepositoryInterface::class,
+            ReportRepository::class
+        );
+
+        
     }
 
     /**

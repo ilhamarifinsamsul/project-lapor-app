@@ -23,7 +23,12 @@
                 </div>
                 <div class="form-group">
                     <label for="image">Image</label>
-                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image') }}">
+                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*" onchange="previewImage(event)">
+                    <img id="image-preview" 
+                        src="#" 
+                        alt="Preview" 
+                        class="mt-3"
+                        style="display:none; width:150px; border-radius:8px;">
                     @error('image')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -32,5 +37,13 @@
             </form>
         </div>
     </div>
-
+@push('scripts')
+<script>
+    function previewImage(event) {
+        const image = document.getElementById('image-preview');
+        image.src = URL.createObjectURL(event.target.files[0]);
+        image.style.display = 'block';
+    }
+</script>
+@endpush
 @endsection
