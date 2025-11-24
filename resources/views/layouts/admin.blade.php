@@ -19,8 +19,10 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets/admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
-        <!-- Custom styles for this page -->
+    <!-- Custom styles for this page -->
     <link href="{{ asset('assets/admin/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    {{-- Leaflet --}}
+    <Link href="{{ asset('assets/leaflet/dist/leaflet.css') }}" rel="stylesheet">
 
 </head>
 
@@ -93,6 +95,8 @@
         <!-- Page level custom scripts -->
     <script src="{{ asset('assets/admin/js/demo/datatables-demo.js') }}"></script>
     <script src="{{ asset('assets/admin/js/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('assets/leaflet/dist/leaflet.js') }}"></script>
+    {{-- @yield('scripts') --}}
 
     {{-- sweetalert confirm delete --}}
     <script>

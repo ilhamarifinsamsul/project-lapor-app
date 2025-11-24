@@ -26,7 +26,7 @@
                     <label for="resident">Pelapor/Masyarakat</label>
                     <select name="resident_id" id="resident_id" class="form-control @error('resident_id') is-invalid @enderror">
                         @foreach ($residents as $resident)
-                            <option value="{{ $resident->id }}">{{ $resident->user->name }} - {{ $resident->user->email }}</option>
+                            <option value="{{ $resident->id }}" @if (old('resident_id') == $resident->id ) selected @endif>{{ $resident->user->name }} - {{ $resident->user->email }}</option>
                         @endforeach 
                     </select>
                     @error('resident_id')
@@ -38,7 +38,7 @@
                     <label for="category">Kategori Laporan</label>
                     <select name="report_category_id" id="report_category_id" class="form-control @error('report_category_id') is-invalid @enderror">
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <option value="{{ $category->id }}" @if (old('report_category_id') == $category->id ) selected @endif>{{ $category->name }}</option>
                         @endforeach 
                     </select>
                     @error('report_category_id')
@@ -48,7 +48,7 @@
 
                 <div class="form-group">
                     <label for="title">Judul Laporan</label>
-                    <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" value="{{ old('title') }}">
+                    <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" required>
                     @error('title')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

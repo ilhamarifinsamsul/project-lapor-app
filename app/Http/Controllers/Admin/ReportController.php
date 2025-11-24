@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreReportRequest;
+use App\Http\Requests\UpdateReportRequest;
 use App\Interfaces\ReportCategoryInterface;
 use App\Interfaces\ReportRepositoryInterface;
 use App\Interfaces\ResidentRepositoryInterface;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert as Swal;
+use Illuminate\Support\Facades\Storage;
 
 class ReportController extends Controller
 {
@@ -49,9 +52,16 @@ class ReportController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreReportRequest $request)
     {
+        $data = $request->validated();
+        // generate code
+        $data['code'] = 'TGN-' . mt_rand(100000, 999999);
+        // simpan image
+        $data['image'] = $request->file('image')->store('assets/report/image', 'public');
+
         // TODO: implement store logic
+        $this->reportRepository->createReport($data);
         Swal::success('Berhasil', 'Laporan berhasil ditambahkan');
         return redirect()->route('admin.report.index');
     }
@@ -61,7 +71,10 @@ class ReportController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // ambil data report beserta report
+        $report = $this->reportRepository->getReportById($id);
+        return view('pages.admin.report.show', compact('report'));
+        
     }
 
     /**
@@ -69,15 +82,27 @@ class ReportController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // ambil data report beserta resident, category dan report category
+        $report = $this->reportRepository->getReportById($id);
+        $residents = $this->residentRepository->getAllResidents();
+        $categories = $this->reportCategoryRepository->getAllReportCategories();
+        
+        return view('pages.admin.report.edit', compact('report', 'residents', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateReportRequest $request, string $id)
     {
-        //
+        $data = $request->validated();
+        // update image
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('assets/report/image', 'public');
+        }
+        $this->reportRepository->updateReport($id, $data);
+        Swal::success('Berhasil', 'Laporan berhasil diupdate');
+        return redirect()->route('admin.report.index');
     }
 
     /**
@@ -85,6 +110,13 @@ class ReportController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // delete image
+        $report = $this->reportRepository->getReportById($id);
+        if ($report->image) {
+            Storage::delete($report->image);
+        }
+        $this->reportRepository->deleteReport($id);
+        Swal::success('Berhasil', 'Laporan berhasil dihapus');
+        return redirect()->route('admin.report.index');
     }
 }
