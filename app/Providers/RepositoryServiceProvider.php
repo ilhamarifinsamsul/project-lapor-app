@@ -9,8 +9,10 @@ use App\Repositories\ResidentRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Interfaces\ReportCategoryInterface;
 use App\Interfaces\ReportRepositoryInterface;
+use App\Interfaces\ReportStatusRepositoryInterface;
 use App\Repositories\ReportCategoryRepository;
 use App\Repositories\ReportRepository;
+use App\Repositories\ReportStatusRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -34,6 +36,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             ReportRepositoryInterface::class,
             ReportRepository::class
+        );
+        $this->app->bind(
+            ReportStatusRepositoryInterface::class,
+            ReportStatusRepository::class
         );
 
         
