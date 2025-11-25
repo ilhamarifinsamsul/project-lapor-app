@@ -62,7 +62,7 @@ class ReportController extends Controller
 
         // TODO: implement store logic
         $this->reportRepository->createReport($data);
-        Swal::success('Berhasil', 'Laporan berhasil ditambahkan');
+        Swal::toast('Report created successfully', 'success');
         return redirect()->route('admin.report.index');
     }
 
@@ -101,7 +101,7 @@ class ReportController extends Controller
             $data['image'] = $request->file('image')->store('assets/report/image', 'public');
         }
         $this->reportRepository->updateReport($id, $data);
-        Swal::success('Berhasil', 'Laporan berhasil diupdate');
+        Swal::toast('Report updated successfully', 'success');
         return redirect()->route('admin.report.index');
     }
 
@@ -116,7 +116,7 @@ class ReportController extends Controller
             Storage::delete($report->image);
         }
         $this->reportRepository->deleteReport($id);
-        Swal::success('Berhasil', 'Laporan berhasil dihapus');
+        Swal::toast('Report deleted successfully', 'success');
         return redirect()->route('admin.report.index');
     }
 }

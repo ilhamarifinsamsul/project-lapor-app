@@ -63,7 +63,7 @@
     <div class="card shadow mb-5">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">Progress Laporan</h6>
-            <a href="{{ route('admin.report-status.create') }}" class="btn btn-primary">Tambah Progress</a>
+            <a href="{{ route('admin.report-status.create', $report->id) }}" class="btn btn-primary">Tambah Progress</a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -82,7 +82,35 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             
-                            <td><img src="{{ asset('storage/' . $status->image) }}" alt="Icon" width="100"></td>
+                            <td>
+                                @if ($status->image)
+                                    <img src="{{ asset('storage/' . $status->image) }}" alt="Icon" width="100">
+                                    @else
+                                    <img src="{{ asset('assets/admin/img/default.png') }}" alt="Image" width="100">
+                                @endif
+                            </td>
+                            
+                            <td>
+                                @php
+                                    $statusClass = [
+                                        'pending' => 'badge badge-secondary',
+                                        'in_progress' => 'badge badge-warning',
+                                        'completed' => 'badge badge-success',
+                                        'rejected' => 'badge badge-danger',
+                                    ][$status->status] ?? 'badge badge-secondary';
+                                    
+                                    $statusLabels = [
+                                        'pending' => 'Pending',
+                                        'in_progress' => 'In Progress',
+                                        'completed' => 'Completed',
+                                        'rejected' => 'Rejected',
+                                    ];
+                                @endphp
+                                <span class="{{ $statusClass }}">
+                                    {{ $statusLabels[$status->status] ?? ucfirst($status->status) }}
+                                </span>
+                            </td>
+                            <td>{{ $status->description }}</td>
                             <td>
                                 <a href="{{ route('admin.report-status.edit', $status->id) }}" class="btn btn-warning">Edit</a>
 
