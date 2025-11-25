@@ -31,7 +31,7 @@ class Report extends Model
         return $this->belongsTo(ReportCategory::class);
     }
 
-    public function statuses()
+    public function ReportStatuses()
     {
         return $this->hasMany(ReportStatus::class);
     }

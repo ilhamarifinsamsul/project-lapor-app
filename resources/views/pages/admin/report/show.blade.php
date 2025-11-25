@@ -44,7 +44,7 @@
                 <tr>
                     <td>Lokasi</td>
                     <td>
-                        <div id="map" style="height: 400px;"></div>
+                        <div id="map" style="height: 300px;"></div>
                     </td>
                 </tr>
                 <tr>
@@ -56,6 +56,50 @@
                     <td>{{ $report->address }}</td>
                 </tr>
             </table>
+        </div>
+    </div>
+
+        {{-- card untuk report status --}}
+    <div class="card shadow mb-5">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Progress Laporan</h6>
+            <a href="{{ route('admin.report-status.create') }}" class="btn btn-primary">Tambah Progress</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Bukti</th>
+                            <th>Status</th>
+                            <th>Deskripsi</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($report->ReportStatuses as $status)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            
+                            <td><img src="{{ asset('storage/' . $status->image) }}" alt="Icon" width="100"></td>
+                            <td>
+                                <a href="{{ route('admin.report-status.edit', $status->id) }}" class="btn btn-warning">Edit</a>
+
+                                <a href="{{ route('admin.report-status.show', $status->id) }}" class="btn btn-info">Show</a>
+
+                                <form action="{{ route('admin.report-status.destroy', $status->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirmDelete(this.form);">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
