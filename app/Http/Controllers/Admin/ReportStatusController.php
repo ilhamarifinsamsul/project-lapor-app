@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReportStatusRequest;
+use App\Http\Requests\UpdateStatusReportRequest;
 use App\Interfaces\ReportRepositoryInterface;
 use App\Interfaces\ReportStatusRepositoryInterface;
 use RealRashid\SweetAlert\Facades\Alert as Swal;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
 
@@ -59,7 +61,8 @@ class ReportStatusController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $status = $this->reportStatusRepository->getReportStatusById($id);
+        return view('pages.admin.report-status.show', compact('status'));
     }
 
     /**
@@ -67,15 +70,23 @@ class ReportStatusController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $status = $this->reportStatusRepository->getReportStatusById($id);
+        return view('pages.admin.report-status.edit', compact('status'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateStatusReportRequest $request, string $id)
     {
-        //
+        // update image
+        $data = $request->validated();
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('assets/report-status/image', 'public');
+        }
+        $this->reportStatusRepository->updateReportStatus($id, $data);
+        Swal::toast('Report Status updated successfully', 'success');
+        return redirect()->route('admin.report.show', $request->report_id);
     }
 
     /**
@@ -83,6 +94,12 @@ class ReportStatusController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $status = $this->reportStatusRepository->getReportStatusById($id);
+        if ($status->image) {
+            Storage::delete($status->image);
+        }
+        $this->reportStatusRepository->deleteReportStatus($id);
+        Swal::toast('Report Status deleted successfully', 'success');
+        return redirect()->route('admin.report.show', $status->report_id);
     }
 }
