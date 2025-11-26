@@ -1,6 +1,19 @@
 @extends('layouts.app')
 @section('title', 'Home Page')
 @section('content')
+{{-- style css --}}
+<style>
+    .badge-status {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    padding: 3px 10px;
+    color: #fff !important;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+</style>
     <h6 class="greeting">Hi, User 👋</h6>
     <h4 class="home-headline">
         Laporkan masalahmu dan kami segera atasi itu
@@ -16,8 +29,6 @@
                 <p>{{ $category->name }}</p>
             </a>
         @endforeach
-
-
     </div>
 
     <div class="py-3" id="reports">
@@ -30,71 +41,44 @@
 
         <div class="d-flex flex-column gap-3 mt-3">
             <div class="card card-report border-0 shadow-none">
-                <a href="details.html" class="text-decoration-none text-dark">
-                    <div class="card-body p-0">
-                        <div class="card-report-image position-relative mb-2">
-                            <img src="assets/images/report-1.png" alt="" />
+                @foreach ($reports as $report)
+                    <a href="details.html" class="text-decoration-none text-dark">
+                        <div class="card-body p-0">
+                            <div class="card-report-image position-relative mb-2">
+                                <img src="{{ asset('storage/' . $report->image) }}" alt="Image" />
+                                @php
+                                    $status = $report->reportStatuses->isNotEmpty()
+                                        ? $report->reportStatuses->last()->status
+                                        : 'pending';
 
-                            <div class="badge-status on-process">Diproses</div>
-                        </div>
+                                    $statusColor =
+                                        [
+                                            'pending' => 'bg-secondary',
+                                            'in_progress' => 'bg-warning',
+                                            'completed' => 'bg-success',
+                                            'rejected' => 'bg-danger',
+                                        ][$status] ?? 'bg-secondary';
+                                @endphp
 
-                        <div class="d-flex justify-content-between align-items-end mb-2">
-                            <div class="d-flex align-items-center">
-                                <img src="assets/images/icons/MapPin.png" alt="map pin" class="icon me-2" />
-                                <p class="text-primary city">Pekuncen, Banyumas</p>
+                                <div class="badge-status {{ $statusColor }}">
+                                    {{ ucfirst(str_replace('_', ' ', $status)) }}
+                                </div>
                             </div>
 
-                            <p class="text-secondary date">23 August 2024</p>
-                        </div>
+                            <div class="d-flex justify-content-between align-items-end mb-2">
+                                <div class="d-flex align-items-center">
+                                    <img src="{{ asset('assets/app/images/icons/MapPin.png') }}" alt="map pin"
+                                        class="icon me-2" />
+                                    <p class="text-primary city">{{ $report->address }}</p>
+                                </div>
 
-                        <h1 class="card-title">Jembatan roboh di Pekuncen, Banyumas</h1>
-                    </div>
-                </a>
-            </div>
-
-            <div class="card card-report border-0 shadow-none">
-                <a href="details.html" class="text-decoration-none text-dark">
-                    <div class="card-body p-0">
-                        <div class="card-report-image position-relative mb-2">
-                            <img src="assets/images/report-2.jpg" alt="" />
-
-                            <div class="badge-status done">Selesai</div>
-                        </div>
-
-                        <div class="d-flex justify-content-between align-items-end mb-2">
-                            <div class="d-flex align-items-center">
-                                <img src="assets/images/icons/MapPin.png" alt="map pin" class="icon me-2" />
-                                <p class="text-primary city">Purwokerto, Banyumas</p>
+                                <p class="text-secondary date">{{ \Carbon\Carbon::parse($report->created_at)->format('d M Y') }}</p>
                             </div>
 
-                            <p class="text-secondary date">23 August 2024</p>
+                            <h1 class="card-title">{{ Str::limit($report->title, 30) }}</h1>
                         </div>
-
-                        <h1 class="card-title">Jalan Rusak Parah</h1>
-                    </div>
-                </a>
-            </div>
-            <div class="card card-report border-0 shadow-none">
-                <a href="details.html" class="text-decoration-none text-dark">
-                    <div class="card-body p-0">
-                        <div class="card-report-image position-relative mb-2">
-                            <img src="assets/images/report-1.png" alt="" />
-
-                            <div class="badge-status on-process">Diproses</div>
-                        </div>
-
-                        <div class="d-flex justify-content-between align-items-end mb-2">
-                            <div class="d-flex align-items-center">
-                                <img src="assets/images/icons/MapPin.png" alt="map pin" class="icon me-2" />
-                                <p class="text-primary city">Pekuncen, Banyumas</p>
-                            </div>
-
-                            <p class="text-secondary date">23 August 2024</p>
-                        </div>
-
-                        <h1 class="card-title">Jembatan roboh di Pekuncen, Banyumas</h1>
-                    </div>
-                </a>
+                    </a>
+                @endforeach
             </div>
         </div>
     </div>
