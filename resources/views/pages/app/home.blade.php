@@ -1,19 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Home Page')
 @section('content')
-{{-- style css --}}
-<style>
-    .badge-status {
-    position: absolute;
-    bottom: 8px;
-    left: 8px;
-    padding: 3px 10px;
-    color: #fff !important;
-    border-radius: 6px;
-    font-size: 12px;
-}
 
-</style>
     <h6 class="greeting">Hi, User 👋</h6>
     <h4 class="home-headline">
         Laporkan masalahmu dan kami segera atasi itu
@@ -42,7 +30,7 @@
         <div class="d-flex flex-column gap-3 mt-3">
             <div class="card card-report border-0 shadow-none">
                 @foreach ($reports as $report)
-                    <a href="details.html" class="text-decoration-none text-dark">
+                    <a href="{{ route('report.show', $report->code) }}" class="text-decoration-none text-dark">
                         <div class="card-body p-0">
                             <div class="card-report-image position-relative mb-2">
                                 <img src="{{ asset('storage/' . $report->image) }}" alt="Image" />
