@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreLoginRequest;
 use App\Interfaces\AuthRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
-
+use Spatie\Permission\Facades\Permission;
 
 class LoginController extends Controller
 {
@@ -31,6 +31,9 @@ class LoginController extends Controller
             if (Auth::user()->hasRole('admin')) {
                 return redirect()->route('admin.dashboard');
             }
+            // jika dia rolenya user
+                return redirect()->route('home');
+
         }
 
         return redirect()->route('login')->withErrors(['email' => 'Email or password is incorrect.']);

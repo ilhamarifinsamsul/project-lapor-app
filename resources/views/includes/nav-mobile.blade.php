@@ -10,7 +10,7 @@
         <i class="fas fa-house"></i>
         Beranda
     </a>
-    <a href="my-reports.html" class="">
+    <a href="{{ route('report.index') }}" class="{{ request()->routeIs('report.index') ? 'active' : '' }}">
         <i class="fas fa-solid fa-clipboard-list"></i>
         Laporanmu
     </a>
@@ -22,8 +22,16 @@
         <i class="fas fa-bell"></i>
         Notifikasi
     </a>
-    <a href="profile.html" class="">
-        <i class="fas fa-user"></i>
-        Profil
-    </a>
+    @auth()
+        <a href="profile.html" class="">
+            <i class="fas fa-user"></i>
+            Profil
+        </a>
+    @else
+        <a href="{{ route('register') }}" class="">
+            <i class="fas fa-right-to-bracket"></i>
+            Daftar
+        </a>
+    @endauth
+
 </nav>

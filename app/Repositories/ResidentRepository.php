@@ -30,6 +30,8 @@ class ResidentRepository implements ResidentRepositoryInterface
                 'password' => bcrypt($data['password']),
             ]
         );
+        // assign role
+        $user->assignRole('resident');
 
         return $user->resident()->create($data);
     }
@@ -44,6 +46,9 @@ class ResidentRepository implements ResidentRepositoryInterface
             // password jika diisi dan tidak diisi
             'password' => isset($data['password']) ? bcrypt($data['password']) : $resident->user->password,
         ]);
+
+        // update role
+        $resident->user->syncRoles('resident');
 
         return $resident->update($data);
     }

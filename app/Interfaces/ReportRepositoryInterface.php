@@ -7,6 +7,8 @@ interface ReportRepositoryInterface {
     public function getLatestReports();
     // function untuk melihat detail laporan berdasarkan kode
     public function getReportByCode($code);
+    // function untuk memfilter laporan berdasarkan category
+    public function getReportsByCategory(string $category);
     public function getReportById(int $id);
     public function createReport(array $data);
     public function updateReport(int $id, array $data);
