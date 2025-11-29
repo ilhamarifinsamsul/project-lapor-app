@@ -2,7 +2,7 @@
 @section('title', 'Home Page')
 @section('content')
 
-    <h6 class="greeting">Hi, {{ Auth::user()->name }} 👋</h6>
+    <h6 class="greeting">Hi, {{ Auth::check() ? Auth::user()->name : 'User' }} 👋</h6>
     <h4 class="home-headline">
         Laporkan masalahmu dan kami segera atasi itu
     </h4>

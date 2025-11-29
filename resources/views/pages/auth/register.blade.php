@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.no-nav')
 @section('title', 'Registrasi')
 @section('content')
     <h5 class="fw-bold mt-5">Daftar sebagai pengguna baru</h5>
