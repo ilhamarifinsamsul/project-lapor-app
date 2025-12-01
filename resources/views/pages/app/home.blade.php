@@ -57,7 +57,7 @@
                                 <div class="d-flex align-items-center">
                                     <img src="{{ asset('assets/app/images/icons/MapPin.png') }}" alt="map pin"
                                         class="icon me-2" />
-                                    <p class="text-primary city">{{ $report->address }}</p>
+                                    <p class="text-primary city">{{ \Str::substr($report->address, 0, 20) }}...</p>
                                 </div>
 
                                 <p class="text-secondary date">{{ \Carbon\Carbon::parse($report->created_at)->format('d M Y') }}</p>

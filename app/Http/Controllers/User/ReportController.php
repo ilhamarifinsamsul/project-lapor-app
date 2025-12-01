@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreReportRequest;
 use App\Interfaces\ReportCategoryInterface;
 use App\Interfaces\ReportRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
@@ -50,5 +52,31 @@ class ReportController extends Controller
     {
         $categories = $this->reportCategoryRepository->getAllReportCategories();
         return view('pages.app.report.create', compact('categories'));
+    }
+    // function store laporan
+    public function store(StoreReportRequest $request)
+    {
+        // TODO: Implement store logic
+        $data = $request->validated();
+        // code
+        $data['code'] = 'TGN-' . mt_rand(100000, 999999);
+        // resident_id
+        $data['resident_id'] = Auth::user()->resident->id;
+        
+        // // latitude and longitude
+        // $data['latitude'] = $request->input('lat');
+        // $data['longitude'] = $request->input('lng');
+        
+        // image
+        $data['image'] = $request->file('image')->store('assets/report/image', 'public');
+
+        // TODO: implement store logic
+        $this->reportRepository->createReport($data);
+        return redirect()->route('report.success');
+    }
+
+    public function success()
+    {
+        return view('pages.app.report.success');
     }
 }
