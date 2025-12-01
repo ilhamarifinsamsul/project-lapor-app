@@ -34,11 +34,12 @@
         <div class="tab-pane fade show active" id="terkirim-tab-pane" role="tabpanel" aria-labelledby="terkirim-tab"
             tabindex="0">
             <div class="d-flex flex-column gap-3 mt-3">
-                @foreach ($reports as $report)
+                @forelse ($reports as $report)
                     <a href="{{ route('report.show', $report->code) }}" class="text-decoration-none text-dark">
                         <div class="card-body p-0">
                             <div class="card-report-image position-relative mb-2">
-                                <img class="rounded-3" src="{{ asset('storage/' . $report->image) }}" alt="{{ $report->title }}" width="448" />
+                                <img class="rounded-3" src="{{ asset('storage/' . $report->image) }}"
+                                    alt="{{ $report->title }}"/>
                                 @php
                                     $status = $report->reportStatuses->isNotEmpty()
                                         ? $report->reportStatuses->last()->status
@@ -69,21 +70,30 @@
                                     {{ \Carbon\Carbon::parse($report->created_at)->format('d M Y') }}</p>
                             </div>
 
-                            <h1 class="card-title">{{ Str::limit($report->title, 30) }}</h1>
+                            <h4 class="card-title">{{ Str::limit($report->title, 30) }}</h4>
                         </div>
                     </a>
-                @endforeach
+                @empty
+                    <div class="d-flex flex-column justify-content-center align-items-center" style="height: 75vh"
+                        id="no-reports">
+                        <div id="lottie"></div>
+                        <h5 class="mt-3">Belum ada laporan</h5>
+                        <a href="" class="btn btn-primary py-2 px-4 mt-3">
+                            Buat Laporan
+                        </a>
+                    </div>
+                @endforelse
             </div>
         </div>
 
         <div class="tab-pane fade" id="diproses-tab-pane" role="tabpanel" aria-labelledby="diproses-tab" tabindex="0">
             <div class="d-flex flex-column gap-3 mt-3">
-                @foreach ($reports as $report)
+                @forelse ($reports as $report)
                     <a href="{{ route('report.show', $report->code) }}" class="text-decoration-none text-dark">
                         <div class="card-body p-0">
                             <div class="card-report-image position-relative mb-2">
-                                <img class="rounded-3" src="{{ asset('storage/' . $report->image) }}" alt="{{ $report->title }}"
-                                    width="448" />
+                                <img class="rounded-3" src="{{ asset('storage/' . $report->image) }}"
+                                    alt="{{ $report->title }}"/>
                                 @php
                                     $status = $report->reportStatuses->isNotEmpty()
                                         ? $report->reportStatuses->last()->status
@@ -114,21 +124,30 @@
                                     {{ \Carbon\Carbon::parse($report->created_at)->format('d M Y') }}</p>
                             </div>
 
-                            <h1 class="card-title">{{ Str::limit($report->title, 30) }}</h1>
+                            <h4 class="card-title">{{ Str::limit($report->title, 30) }}</h4>
                         </div>
                     </a>
-                @endforeach
+                @empty
+                    <div class="d-flex flex-column justify-content-center align-items-center" style="height: 75vh"
+                        id="no-reports">
+                        <div id="lottie"></div>
+                        <h5 class="mt-3">Belum ada laporan</h5>
+                        <a href="" class="btn btn-primary py-2 px-4 mt-3">
+                            Buat Laporan
+                        </a>
+                    </div>
+                @endforelse
             </div>
         </div>
 
         <div class="tab-pane fade" id="selesai-tab-pane" role="tabpanel" aria-labelledby="selesai-tab" tabindex="0">
             <div class="d-flex flex-column gap-3 mt-3">
-                @foreach ($reports as $report)
+                @forelse ($reports as $report)
                     <a href="{{ route('report.show', $report->code) }}" class="text-decoration-none text-dark">
                         <div class="card-body p-0">
                             <div class="card-report-image position-relative mb-2">
-                                <img class="rounded-3" src="{{ asset('storage/' . $report->image) }}" alt="{{ $report->title }}"
-                                    width="448" />
+                                <img class="rounded-3" src="{{ asset('storage/' . $report->image) }}"
+                                    alt="{{ $report->title }}" />
                                 @php
                                     $status = $report->reportStatuses->isNotEmpty()
                                         ? $report->reportStatuses->last()->status
@@ -159,21 +178,30 @@
                                     {{ \Carbon\Carbon::parse($report->created_at)->format('d M Y') }}</p>
                             </div>
 
-                            <h1 class="card-title">{{ Str::limit($report->title, 30) }}</h1>
+                            <h4 class="card-title">{{ Str::limit($report->title, 30) }}</h4>
                         </div>
                     </a>
-                @endforeach
+                @empty
+                    <div class="d-flex flex-column justify-content-center align-items-center" style="height: 75vh"
+                        id="no-reports">
+                        <div id="lottie"></div>
+                        <h5 class="mt-3">Belum ada laporan</h5>
+                        <a href="" class="btn btn-primary py-2 px-4 mt-3">
+                            Buat Laporan
+                        </a>
+                    </div>
+                @endforelse
             </div>
         </div>
 
         <div class="tab-pane fade" id="ditolak-tab-pane" role="tabpanel" aria-labelledby="ditolak-tab" tabindex="0">
             <div class="d-flex flex-column gap-3 mt-3">
-                @foreach ($reports as $report)
+                @forelse ($reports as $report)
                     <a href="{{ route('report.show', $report->code) }}" class="text-decoration-none text-dark">
                         <div class="card-body p-0">
                             <div class="card-report-image position-relative mb-2">
-                                <img class="rounded-3" src="{{ asset('storage/' . $report->image) }}" alt="{{ $report->title }}"
-                                        width="448" />
+                                <img class="rounded-3" src="{{ asset('storage/' . $report->image) }}"
+                                    alt="{{ $report->title }}"/>
                                 @php
                                     $status = $report->reportStatuses->isNotEmpty()
                                         ? $report->reportStatuses->last()->status
@@ -204,11 +232,32 @@
                                     {{ \Carbon\Carbon::parse($report->created_at)->format('d M Y') }}</p>
                             </div>
 
-                            <h1 class="card-title">{{ Str::limit($report->title, 30) }}</h1>
+                            <h4 class="card-title">{{ Str::limit($report->title, 30) }}</h4>
                         </div>
                     </a>
-                @endforeach
+                @empty
+                    <div class="d-flex flex-column justify-content-center align-items-center" style="height: 75vh"
+                        id="no-reports">
+                        <div id="lottie"></div>
+                        <h5 class="mt-3">Belum ada laporan</h5>
+                        <a href="" class="btn btn-primary py-2 px-4 mt-3">
+                            Buat Laporan
+                        </a>
+                    </div>
+                @endforelse
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+        <script>
+            var animation = bodymovin.loadAnimation({
+                container: document.getElementById('lottie'),
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: '{{ asset('assets/app/lottie/not-found.json') }}'
+            })
+        </script>
+    @endpush
 @endsection
