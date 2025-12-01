@@ -37,8 +37,7 @@ class ReportRepository implements ReportRepositoryInterface
 
     public function createReport(array $data)
     {
-        $report = Report::create($data);
-        
+        return Report::create($data);
     }
 
     public function updateReport(int $id, array $data)
