@@ -10,7 +10,7 @@
         <i class="fas fa-house"></i>
         Beranda
     </a>
-    <a href="{{ route('report.index') }}" class="{{ request()->routeIs('report.index') ? 'active' : '' }}">
+    <a href="{{ route('report.myreport', ['status' => 'pending']) }}" class="{{ request()->routeIs('report.myreport') ? 'active' : '' }}">
         <i class="fas fa-solid fa-clipboard-list"></i>
         Laporanmu
     </a>

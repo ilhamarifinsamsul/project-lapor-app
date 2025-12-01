@@ -31,6 +31,13 @@ class ReportController extends Controller
         }
         return view('pages.app.report.index', compact('reports'));
     }
+    // function myReport
+    public function myReport(Request $request){
+        // $status = $request->status ?? 'pending';
+        $reports = $this->reportRepository->getReportsByResidentId($request->status);
+        return view('pages.app.report.my-report', compact('reports'));
+        
+    }
 
     public function show($code){
         $report = $this->reportRepository->getReportByCode($code);

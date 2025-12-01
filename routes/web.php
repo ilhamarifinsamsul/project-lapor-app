@@ -22,6 +22,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/create-report', [UserReportController::class, 'create'])->name('report.create');
     Route::post('/create-report', [UserReportController::class, 'store'])->name('report.store');
     Route::get('/report-success', [UserReportController::class, 'success'])->name('report.success');
+    Route::get('/my-report', [UserReportController::class, 'myReport'])->name('report.myreport');
+    
     
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 });
